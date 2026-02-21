@@ -130,6 +130,60 @@ export interface StatusUpdateData {
   notes: string;
 }
 
+// Invoice types
+export interface InvoiceListItem {
+  id: number;
+  invoice_number: string;
+  tracking_code: string;
+  sender_name: string;
+  receiver_name: string;
+  total_amount: string;
+  payment_status: string;
+  payment_status_display: string;
+  issued_date: string;
+  due_date: string;
+  created_at: string;
+}
+
+export interface Invoice {
+  id: number;
+  invoice_number: string;
+  shipment: Shipment;
+  shipping_fee: string;
+  tax_rate: string;
+  tax_amount: string;
+  discount: string;
+  total_amount: string;
+  notes: string;
+  payment_status: string;
+  payment_status_display: string;
+  issued_date: string;
+  due_date: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface InvoiceCreateData {
+  shipment: number;
+  shipping_fee: string;
+  tax_rate: string;
+  discount: string;
+  notes: string;
+  payment_status: string;
+  issued_date: string;
+  due_date: string;
+}
+
+export const PAYMENT_STATUS_OPTIONS = [
+  { value: "unpaid", label: "Unpaid", color: "bg-yellow-100 text-yellow-800" },
+  { value: "paid", label: "Paid", color: "bg-green-100 text-green-800" },
+  { value: "overdue", label: "Overdue", color: "bg-red-100 text-red-800" },
+] as const;
+
+export function getPaymentStatusColor(status: string): string {
+  return PAYMENT_STATUS_OPTIONS.find((s) => s.value === status)?.color ?? "bg-gray-100 text-gray-800";
+}
+
 export const STATUS_OPTIONS = [
   { value: "pending", label: "Pending", color: "bg-yellow-100 text-yellow-800" },
   { value: "picked_up", label: "Picked Up", color: "bg-blue-100 text-blue-800" },

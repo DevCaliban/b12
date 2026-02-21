@@ -9,10 +9,25 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
+function copyToClipboard(text: string) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).catch(() => {});
+  } else {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+  }
+}
+
 function CopyButton({ text, label }: { text: string; label: string }) {
   const [copied, setCopied] = useState(false);
   const handleCopy = () => {
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };

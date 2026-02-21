@@ -16,12 +16,27 @@ interface ShipmentTableProps {
   onSelectAll?: () => void;
 }
 
+function copyToClipboard(text: string) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).catch(() => {});
+  } else {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+  }
+}
+
 function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
   const handleCopy = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    navigator.clipboard.writeText(text);
+    copyToClipboard(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   };
