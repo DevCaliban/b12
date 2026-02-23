@@ -42,10 +42,10 @@ export default function BarChart({ data, height = 240 }: BarChartProps) {
         preserveAspectRatio="xMidYMid meet"
       >
         {/* Grid lines */}
-        {yTicks.map((tick) => {
+        {yTicks.map((tick, index) => {
           const y = padding.top + innerHeight - (tick / maxCount) * innerHeight;
           return (
-            <g key={tick}>
+            <g key={index}>
               <line
                 x1={padding.left}
                 x2={chartWidth - padding.right}
