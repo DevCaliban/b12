@@ -26,8 +26,16 @@ export default function AdminLoginPage() {
     try {
       await login(username, password);
       router.push("/dashboard");
-    } catch {
-      setError("Invalid username or password. Please try again.");
+    } catch (err: unknown) {
+      if (err && typeof err === "object" && "response" in err) {
+        // Server responded with an error status (401, 403, etc.)
+        setError("Invalid username or password. Please try again.");
+      } else if (err && typeof err === "object" && "request" in err) {
+        // Request was made but no response received (network/CORS error)
+        setError("Unable to reach the server. Please check your connection.");
+      } else {
+        setError("An unexpected error occurred. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
