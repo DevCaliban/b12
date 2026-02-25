@@ -26,12 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans antialiased bg-white text-gray-900`}>
-        <AuthProvider>{children}</AuthProvider>
-        <WhatsAppButton />
+      <head>
         <Script
           id="tawk-to"
-          strategy="lazyOnload"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
@@ -46,6 +44,10 @@ export default function RootLayout({
             `,
           }}
         />
+      </head>
+      <body className={`${inter.variable} font-sans antialiased bg-white text-gray-900`}>
+        <AuthProvider>{children}</AuthProvider>
+        <WhatsAppButton />
       </body>
     </html>
   );
