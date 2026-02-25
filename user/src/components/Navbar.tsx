@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import Logo from "./Logo";
+import GoogleTranslate from "./GoogleTranslate";
 import { useAuth } from "@/context/AuthContext";
 
 const navLinks = [
@@ -52,6 +53,8 @@ export default function Navbar() {
               </svg>
               20+ Countries Worldwide
             </span>
+            <span className="hidden sm:inline text-gray-600">|</span>
+            <GoogleTranslate />
           </div>
         </div>
       </div>
